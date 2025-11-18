@@ -174,34 +174,70 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="bg-white shadow-md fixed w-full top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 py-4">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                    <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                        <i class="fas fa-shopping-bag text-white text-xl"></i>
-                    </div>
-                    <span class="text-2xl font-bold text-gray-800">Promora</span>
-                </div>
-                
-                <div class="hidden md:flex space-x-8">
-                    <a href="#" class="text-gray-600 hover:text-primary transition">Home</a>
-                    <a href="#" class="text-gray-600 hover:text-primary transition">Categories</a>
-                    <a href="#" class="text-gray-600 hover:text-primary transition">Orders</a>
-                    <a href="#" class="text-primary font-semibold">Profile</a>
-                </div>
-                
-                <div class="flex items-center space-x-4">
-                    <button class="relative">
-                        <i class="fas fa-bell text-gray-600 text-xl"></i>
-                        <span class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">3</span>
-                    </button>
-                    <button onclick="logout()" class="text-gray-600 hover:text-primary transition">
-                        <i class="fas fa-sign-out-alt text-xl"></i>
-                    </button>
-                </div>
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-6 py-4">
+        <div class="flex justify-between items-center">
+          <a href="#home" class="flex items-center space-x-2">
+            <div class="flex items-center space-x-2">
+              <img
+                class="h-8 flex items-center justify-center"
+                src="./assets/img/Container.png"
+                alt=""
+              />
             </div>
+          </a>
+
+          <div class="hidden md:flex space-x-8">
+            <a
+              href="#home"
+              class="text-purple-600 hover:text-purple-600 font-medium"
+              >Home</a
+            >
+            <a
+              href="explore.html"
+              class="text-gray-700 hover:text-purple-600 font-medium"
+              >Explore</a
+            >
+            <a href="#" class="text-gray-700 hover:text-purple-600 font-medium"
+              >About</a
+            >
+            <a href="#" class="text-gray-700 hover:text-purple-600 font-medium"
+              >Contact</a
+            >
+          </div>
+
+          <div class="flex items-center space-x-4">
+            <!-- Keranjang -->
+            <a href="cart.html">
+              <img
+                src="./assets/img/cart.png"
+                alt="Cart"
+                class="h-6 w-6 hover:opacity-80"
+              />
+            </a>
+
+            <button
+              class="text-gray-700 font-medium px-4 py-2 hover:text-purple-600"
+            >
+              Login
+            </button>
+            <button
+              class="primary-color text-white px-6 py-2 rounded-full font-medium hover:opacity-90"
+            >
+              Sign up
+            </button>
+
+            <!-- PROFILE -->
+            <a href="profile.html"><img  
+              src="./assets/img/user.png" 
+              alt="Profile" 
+              class="h-10 w-10 rounded-full object-cover border hover:opacity-90 cursor-pointer"
+            /></a>
+          </div>
+
+          </div>
         </div>
+      </div>
     </nav>
 
     <!-- Notification -->
