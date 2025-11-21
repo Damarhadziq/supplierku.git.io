@@ -18,13 +18,15 @@
         const ongkir = 50000;
 
         document.querySelectorAll(".cart-item").forEach((item) => {
+          const checkbox = item.querySelector(".item-check");
+          if (!checkbox || !checkbox.checked) return;
+
           const price = parseInt(item.dataset.price);
           const fee = parseInt(item.dataset.fee);
           const qty = parseInt(item.querySelector(".qty-input").value);
 
           const itemTotal = (price + fee) * qty;
-          item.querySelector(".item-subtotal").textContent =
-            formatRupiah(itemTotal);
+          item.querySelector(".item-subtotal").textContent = formatRupiah(itemTotal);
 
           totalPromo += price * qty;
           totalFee += fee * qty;
@@ -32,13 +34,22 @@
 
         const grandTotal = totalPromo + totalFee + ongkir;
 
-        document.getElementById("totalPromo").textContent =
-          formatRupiah(totalPromo);
-        document.getElementById("totalFee").textContent =
-          formatRupiah(totalFee);
-        document.getElementById("grandTotal").textContent =
-          formatRupiah(grandTotal);
+        document.getElementById("totalPromo").textContent = formatRupiah(totalPromo);
+        document.getElementById("totalFee").textContent = formatRupiah(totalFee);
+        document.getElementById("grandTotal").textContent = formatRupiah(grandTotal);
+
+        // ⬇⬇ SIMPAN LOCALSTORAGE DI SINI! BARU BENAR ⬇⬇
+        localStorage.setItem("totalBayar", grandTotal);
+        localStorage.setItem("totalPromo", totalPromo);
+        localStorage.setItem("totalFee", totalFee);
+        localStorage.setItem("jumlahBarang", document.querySelectorAll(".item-check:checked").length);
       }
+
+      document.addEventListener("change", function (e) {
+          if (e.target.classList.contains("item-check")) {
+              calculateTotals();
+          }
+      });
 
       // Handle quantity changes
       document.addEventListener("click", function (e) {
@@ -76,7 +87,7 @@
       });
 
       // Initial calculation
-      calculateTotals();
+      calculateTotals();            
 
       // Script ini WAJIB ada di SETIAP halaman biar status login konsisten
 function checkLoginStatus() {
@@ -129,3 +140,5 @@ document.addEventListener('click', () => {
 
 // Jalankan tiap halaman dibuka
 window.addEventListener('load', checkLoginStatus);
+
+

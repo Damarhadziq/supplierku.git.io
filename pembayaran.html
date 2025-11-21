@@ -110,7 +110,7 @@
           <span>Batas akhir pembayaran:</span>
           <span id="countdown" class="font-bold text-xl">23:59:59</span>
         </div>
-        <div class="text-4xl font-bold mt-2">Rp 2.134.000</div>
+        <div class="text-4xl font-bold mt-2 total-bayar">Rp 0</div>
         <p class="text-sm opacity-90 mt-1">Total Pembayaran</p>
       </div>
 
@@ -163,20 +163,29 @@
             </div>
             <div id="detail-qris" class="mt-5 hidden text-center">
               <img src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=00020126580014BR.COM.BANCOBRADESCO5204000053039865802BR5925PROMORA+JASTIP+INDONESIA6009JAKARTA61051234062240306PAY2134002630440C5" alt="QRIS" class="mx-auto rounded-2xl shadow-lg border-4 border-white">
-              <p class="mt-4 font-semibold text-primary text-xl">Rp 2.134.000</p>
+              <p class="mt-4 font-semibold text-primary text-xl total-bayar">Rp 0</p>
             </div>
           </div>
         </div>
 
         <!-- Ringkasan -->
-        <div class="bg-gray-50 rounded-2xl p-5 text-sm">
-          <div class="flex justify-between font-medium"><span>3 barang</span><span>Rp 1.959.000</span></div>
-          <div class="flex justify-between text-gray-600"><span>Fee Jastip + Ongkir</span><span>Rp 175.000</span></div>
-          <hr class="my-3 border-dashed">
-          <div class="flex justify-between text-lg font-bold text-primary">
-            <span>Total Bayar</span><span>Rp 2.134.000</span>
-          </div>
+        <div class="flex justify-between font-medium">
+          <span class="jumlah-barang">0 barang</span>
+          <span class="total-promo">Rp 0</span>
         </div>
+
+        <div class="flex justify-between text-gray-600">
+          <span>Fee Jastip + Ongkir</span>
+          <span class="total-fee">Rp 0</span>
+        </div>
+
+        <hr class="my-3 border-dashed">
+
+        <div class="flex justify-between text-lg font-bold text-primary">
+          <span>Total Bayar</span>
+          <span class="total-bayar">Rp 0</span>
+        </div>
+
 
         <!-- Tombol Aksi -->
         <div class="flex gap-4 pt-4">
@@ -314,5 +323,6 @@
       </div>
     </footer>
     <script src="./assets/js/pembayaran.js"></script>
+    <script src="./assets/js/cart.js"></script>
 </body>
 </html>

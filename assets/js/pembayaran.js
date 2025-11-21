@@ -1,4 +1,5 @@
 
+
     // Countdown
     let detik = 24 * 60 * 60;
     setInterval(() => {
@@ -8,6 +9,26 @@
       const s = String(detik % 60).padStart(2, '0');
       document.getElementById('countdown').textContent = `${h}:${m}:${s}`;
     }, 1000);
+
+
+  //Memanggil harga dari cart
+    window.addEventListener("load", function () {
+      function formatRupiah(angka) {
+        return "Rp " + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      }
+
+      const total = parseInt(localStorage.getItem("totalBayar")) || 0;
+      const promo = parseInt(localStorage.getItem("totalPromo")) || 0;
+      const fee = parseInt(localStorage.getItem("totalFee")) || 0;
+      const jumlah = parseInt(localStorage.getItem("jumlahBarang")) || 0;
+
+      document.querySelectorAll(".total-bayar").forEach(el => el.textContent = formatRupiah(total));
+      document.querySelectorAll(".total-promo").forEach(el => el.textContent = formatRupiah(promo));
+      document.querySelectorAll(".total-fee").forEach(el => el.textContent = formatRupiah(fee));
+      document.querySelectorAll(".jumlah-barang").forEach(el => el.textContent = jumlah + " barang");
+    });
+
+
 
     // Pilih metode
     function pilihMetode(metode) {
@@ -138,3 +159,5 @@ document.addEventListener('click', () => {
 
 // Jalankan tiap halaman dibuka
 window.addEventListener('load', checkLoginStatus);
+
+
