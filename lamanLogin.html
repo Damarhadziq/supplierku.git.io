@@ -134,7 +134,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                     </svg>
                                 </div>
-                                <p class="font-bold text-gray-900">Pelanggan</p>
+                                <p class="font-bold text-gray-900">Customer</p>
                             </div>
                             <div class="role-card rounded-2xl p-6 text-center border-2 border-gray-200" onclick="selectRole('seller')">
                                 <div class="w-14 h-14 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -192,7 +192,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                                     </svg>
                                 </div>
-                                <p class="font-bold text-gray-900">Pelanggan</p>
+                                <p class="font-bold text-gray-900">Customer</p>
                             </div>
                             <div class="role-card rounded-2xl p-6 text-center border-2 border-gray-200" onclick="selectRoleReg('seller')">
                                 <div class="w-14 h-14 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -295,41 +295,116 @@
             }
         }
 
-        // Ganti fungsi handleLogin
-        function handleLogin(e) {
-        e.preventDefault();
+// Fungsi handleLogin dengan API
+async function handleLogin(e) {
+    e.preventDefault();
+    
+    const emailOrUsername = e.target.querySelector('input[type="text"]').value.trim();
+    const password = document.getElementById('login-pass').value;
+    const selectedRole = document.querySelector('#login-container .role-card.selected p').textContent.trim().toLowerCase();
+    
+    try {
+        const response = await fetch('backend/api/login.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email_or_username: emailOrUsername,
+                password: password,
+                role: selectedRole
+            })
+        });
         
-        // Ambil input (kamu bisa tambah validasi nanti)
-        const emailOrUsername = e.target.querySelector('input[type="text"], input[type="email"]').value.trim();
-        const password = document.getElementById('login-pass').value;
-
-        if (emailOrUsername && password) {
-            // Simpan data user ke localStorage (sementara, nanti bisa diganti API)
+        const result = await response.json();
+        
+        if (response.ok) {
+            // Simpan data user ke localStorage
             localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('userName', emailOrUsername.split('@')[0] || emailOrUsername); // ambil sebelum @ atau full username
-            localStorage.setItem('userRole', document.querySelector('#login-container .role-card.selected p').textContent.trim());
-
+            localStorage.setItem('userId', result.user.id);
+            localStorage.setItem('userName', result.user.first_name);
+            localStorage.setItem('userEmail', result.user.email);
+            localStorage.setItem('userRole', result.user.role);
+            
             alert('Login berhasil! Selamat datang kembali 👋');
-            window.location.href = "index.html"; // balik ke home
+            window.location.href = "index.html";
+        } else {
+            alert(result.message || 'Login gagal');
         }
-        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Terjadi kesalahan saat login');
+    }
+}
 
-        // Ganti fungsi handleRegister
-        function handleRegister(e) {
-        e.preventDefault();
+// Fungsi handleRegister dengan error logging
+async function handleRegister(e) {
+    e.preventDefault();
+    
+    const firstName = e.target.querySelector('input[placeholder="Nama Depan"]').value.trim();
+    const lastName = e.target.querySelector('input[placeholder="Nama Belakang"]').value.trim();
+    const email = e.target.querySelector('input[type="email"]').value.trim();
+    const username = e.target.querySelector('input[placeholder="Username"]').value.trim();
+    const phone = e.target.querySelector('input[placeholder*="WhatsApp"]').value.trim();
+    const password = document.getElementById('reg-pass').value;
+    const confirmPassword = e.target.querySelector('input[placeholder="Konfirmasi Password"]').value;
+    const selectedRole = document.querySelector('#register-container .role-card.selected p').textContent.trim().toLowerCase();
+    
+    // Validasi password match
+    if (password !== confirmPassword) {
+        alert('Password dan konfirmasi password tidak cocok!');
+        return;
+    }
+    
+    // Validasi panjang password
+    if (password.length < 8) {
+        alert('Password minimal 8 karakter!');
+        return;
+    }
+    
+    const dataToSend = {
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        username: username,
+        phone: phone,
+        password: password,
+        role: selectedRole
+    };
+    
+    console.log('Data yang dikirim:', dataToSend); // Debug
+    
+    try {
+        const response = await fetch('backend/api/register.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+        });
         
-        const firstName = e.target.querySelector('input[placeholder="Nama Depan"]').value;
-        const email = e.target.querySelector('input[type="email"]').value;
-
-        if (firstName && email) {
+        console.log('Response status:', response.status); // Debug
+        
+        const result = await response.json();
+        console.log('Response data:', result); // Debug
+        
+        if (response.ok) {
             localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('userName', firstName);
-            localStorage.setItem('userRole', document.querySelector('#register-container .role-card.selected p').textContent.trim());
-
+            localStorage.setItem('userId', result.user.id);
+            localStorage.setItem('userName', result.user.first_name);
+            localStorage.setItem('userEmail', result.user.email);
+            localStorage.setItem('userRole', result.user.role);
+            
             alert('Pendaftaran berhasil! Selamat datang di Promora 🎉');
             window.location.href = "index.html";
+        } else {
+            alert(result.message || 'Registrasi gagal');
         }
-        }
+    } catch (error) {
+        console.error('Error detail:', error); // Debug
+        alert('Terjadi kesalahan: ' + error.message);
+    }
+}
     </script>
 </body>
 </html>
