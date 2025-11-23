@@ -327,7 +327,12 @@ async function handleLogin(e) {
             localStorage.setItem('userRole', result.user.role);
             
             alert('Login berhasil! Selamat datang kembali 👋');
+        // Redirect berdasarkan role
+        if (result.user.role === 'seller') {
+            window.location.href = "homeSeller.html";
+        } else {
             window.location.href = "index.html";
+        }
         } else {
             alert(result.message || 'Login gagal');
         }
@@ -396,7 +401,12 @@ async function handleRegister(e) {
             localStorage.setItem('userRole', result.user.role);
             
             alert('Pendaftaran berhasil! Selamat datang di Promora 🎉');
-            window.location.href = "index.html";
+            // Redirect berdasarkan role
+            if (result.user.role === 'seller') {
+                window.location.href = "homeSeller.html";
+            } else {
+                window.location.href = "index.html";
+            }
         } else {
             alert(result.message || 'Registrasi gagal');
         }
@@ -438,9 +448,14 @@ async function checkSession() {
 window.addEventListener('DOMContentLoaded', async () => {
     const isLoggedIn = await checkSession();
     
-    // Jika sudah login dan ada di halaman login, redirect ke home
+    // Jika sudah login dan ada di halaman login, redirect berdasarkan role
     if (isLoggedIn && window.location.pathname.includes('login.html')) {
-        window.location.href = 'index.html';
+        const userRole = localStorage.getItem('userRole');
+        if (userRole === 'seller') {
+            window.location.href = 'homeSeller.html';
+        } else {
+            window.location.href = 'index.html';
+        }
     }
 });
 
